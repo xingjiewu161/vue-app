@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "Dashboard",
   data () {
     return {
       msg: "sometimes never sometimes ever",

@@ -1,23 +1,30 @@
 <template>
     <div class="container">
       <header>
-         <img src="../../../static/logo.png">
+         <img src="../../../static/login.png">
       </header>
       <article>
         <div class="title">you can share your courseware here and get paid</div>
         <div class="sub-content text-center">
-            <div>
-              <el-input v-model="cellphone" placeholder="cellphone" prefix-icon="el-icon-mobile-phone" auto-complete="off"></el-input>
-              <el-input v-model="password" placeholder="password" prefix-icon="el-icon-edit"></el-input>
-            </div>
-            <div>
-              <el-form-item label="特殊资源" prop="resource">
-                <el-button v-model="ruleForm.resource" class="wf" type="primary" size="medium">Login</el-button>
+          <el-form :model="loginForm" :rules="rules" status-icon ref="loginForm" class="login-form">
+            <div class="input-group">
+              <el-form-item prop="cellphone">
+                <el-input v-model="loginForm.cellphone" placeholder="cellphone" prefix-icon="el-icon-mobile-phone" auto-complete="off"></el-input>
               </el-form-item>
+              <el-form-item prop="password">
+                <el-input v-model="loginForm.password" placeholder="password" prefix-icon="el-icon-edit" type="password" auto-complete="off"></el-input>
+              </el-form-item>
+              <!-- <input v-model="message" > -->
             </div>
+            <div>
+                <el-button @click="login('loginForm')" class="wf" type="primary" size="medium">Login</el-button>
+            </div>
+          </el-form>
             <div class="flex jc-bwt al-bas">
-                <el-radio label="remember me"></el-radio>
-                <el-button type="text">forget password</el-button>
+                <el-checkbox-group v-model="loginForm.remeber">
+                  <el-checkbox label="remember me"></el-checkbox >
+                </el-checkbox-group>
+                <el-button type="text" @click="gotoForgetPwd($event)">forget password</el-button>
             </div>
         </div>
       </article>
@@ -26,21 +33,74 @@
 
 <script>
 export default {
-  name: "Login",
+  name: 'Login',
+  components: {
+  },
   data () {
+    let validateUsername = (rule, value, callback) => {
+      !(/^\d+$/.test(value)) && callback(new Error('手机号只能输入数字！'))
+    }
+    let validatorPassword = (rule, value, callback) => {
+      !(/^[A-Za-z0-9]+$/.test(value)) && callback(new Error('密码格式输入错误！'))
+    }
     return {
-      cellphone: "",
-      password: "",
-      resource: "",
-      ruleForm: {
-        resource: ''
+      loginForm: {
+        cellphone: '',
+        password: '',
+        remeber: false
+      },
+      rules: {
+        cellphone: [
+          { required: true, message: '请输入电话号码登录', trigger: 'change' },
+          { validator: validateUsername, trigger: 'change' }
+        ],
+        password: [
+          { required: true, message: '请输入登录密码', trigger: 'change' },
+          { validator: validatorPassword, message: '请输入登录密码', trigger: 'change' }
+        ]
       }
     };
+  },
+  computed: {
+    // vuex表单处理
+    // message: {
+    //   get () {
+    //     console.log('$store', this.$store.state)
+    //     return this.$store.state.message;
+    //   },
+    //   set (value) {
+    //     this.$store.commit('updateMessage', value)
+    //   }
+    // }
+  },
+  methods: {
+    login: function (formname) {
+      console.log('$refs', this.$refs)
+      this.$refs[formname].validate((v) => {
+        if (v) {
+          this.$router.push({path: '/dashboard'});
+          this.$store.commit('switch_status');
+        } else {
+          console.log(v)
+        }
+      });
+    },
+    gotoForgetPwd: function ($event) {
+      event.preventDefault()
+      this.$router.push({path: '/forgetpwd'})
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+body {
+  background: #f6f6f6;
+}
+img {
+  width: 200px;
+  height: 200px;
+}
 .content,
 .title,
 .text-center {
@@ -67,7 +127,13 @@ article {
 .sub-content {
   margin: 10px 0;
 }
-.el-input {
-  margin-bottom: 15px;
+.el-form-item {
+  margin-bottom: 20px;
+}
+.input-group {
+  margin-bottom: 25px;
+}
+.el-input__inner {
+  background-color:#f6f6f6;
 }
 </style>
