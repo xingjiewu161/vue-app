@@ -1,8 +1,6 @@
 <template>
     <div>
-        <header>
-            <img src="../../../static/logo.png">
-        </header>
+        <t-templateLogo></t-templateLogo>
         <div class="back">back</div>
         <input id="forgetpwd" type="text">
         <button>忘记密码</button>
@@ -10,7 +8,11 @@
 </template>
 
 <script>
+import TemplateLogo from './../common/TempLogo.vue'
 export default {
-  name: "Forgetpwd"
+  name: "Forgetpwd",
+  components: {
+    't-templateLogo': TemplateLogo
+  }
 };
 </script>

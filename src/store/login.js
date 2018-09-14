@@ -1,21 +1,17 @@
 const state = {
-  name: 'weish',
-  age: 22,
-  login: false,
-  message: '123',
+  userinfo: {
+    UserForm: {
+      username: '',
+      password: ''
+    }
+  },
+  isLogin: false,
   mutations: {
-    switch_status (state) {
-      state.login = !state.login
-    },
-    updateMessage (state, message) {
-      state.obj.message = message;
-      console.log(state.obj.message)
+    logined (state, val) {
+      state.isLogin = val
     }
   },
   actions: {
-    switch_status (context) {
-      context.commit('switch_status');
-    }
   }
 };
 

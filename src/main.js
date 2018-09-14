@@ -6,6 +6,9 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
+// 引入mockjs
+require('./mock.js')
+
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
@@ -18,4 +21,9 @@ new Vue({
     App
   },
   template: '<App/>'
+})
+
+// 时间整理过滤器 getYMD
+Vue.filter('getYMD', function (input) {
+  return input.split(' ')[0];
 })

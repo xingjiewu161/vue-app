@@ -1,8 +1,9 @@
 <template>
     <div class="container">
-      <header>
+      <!-- <header>
          <img src="../../../static/login.png">
-      </header>
+      </header> -->
+      <t-templateLogo></t-templateLogo>
       <article>
         <div class="title">you can share your courseware here and get paid</div>
         <div class="sub-content text-center">
@@ -17,7 +18,7 @@
               <!-- <input v-model="message" > -->
             </div>
             <div>
-                <el-button @click="login('loginForm')" class="wf" type="primary" size="medium">Login</el-button>
+                <el-button @click="login()" class="wf" type="primary" size="medium">Login</el-button>
             </div>
           </el-form>
             <div class="flex jc-bwt al-bas">
@@ -32,17 +33,30 @@
 </template>
 
 <script>
+import api from "./../../axios/interface.js";
+import TemplateLogo from './../common/TempLogo.vue'
 export default {
   name: 'Login',
   components: {
+    't-templateLogo': TemplateLogo
+  },
+  created () {
+    // this.loginForm = this.$store.state.userinfo.UserForm;
+  },
+  beforeDestory () {
+    // this.$store.state.userinfo.UserForm = this.UserForm;
   },
   data () {
     let validateUsername = (rule, value, callback) => {
-      !(/^\d+$/.test(value)) && callback(new Error('手机号只能输入数字！'))
-    }
+      !/^\d+$/.test(value)
+        ? callback(new Error("手机号只能输入数字！"))
+        : callback();
+    };
     let validatorPassword = (rule, value, callback) => {
-      !(/^[A-Za-z0-9]+$/.test(value)) && callback(new Error('密码格式输入错误！'))
-    }
+      !/^.{0,12}$/.test(value)
+        ? callback(new Error("密码最大长度 不超过12个字符"))
+        : callback();
+    };
     return {
       loginForm: {
         cellphone: '',
@@ -51,43 +65,44 @@ export default {
       },
       rules: {
         cellphone: [
-          { required: true, message: '请输入电话号码登录', trigger: 'change' },
-          { validator: validateUsername, trigger: 'change' }
+          { required: true, message: "请输入电话号码登录", trigger: "change" },
+          { validator: validateUsername, trigger: "change" }
         ],
         password: [
-          { required: true, message: '请输入登录密码', trigger: 'change' },
-          { validator: validatorPassword, message: '请输入登录密码', trigger: 'change' }
+          { required: true, message: "请输入登录密码", trigger: "change" },
+          { validator: validatorPassword, trigger: "change" }
         ]
-      }
+      },
+      newsListShow: []
     };
   },
-  computed: {
-    // vuex表单处理
-    // message: {
-    //   get () {
-    //     console.log('$store', this.$store.state)
-    //     return this.$store.state.message;
-    //   },
-    //   set (value) {
-    //     this.$store.commit('updateMessage', value)
-    //   }
-    // }
-  },
   methods: {
-    login: function (formname) {
-      console.log('$refs', this.$refs)
-      this.$refs[formname].validate((v) => {
-        if (v) {
-          this.$router.push({path: '/dashboard'});
-          this.$store.commit('switch_status');
+    login () {
+      this.$refs["loginForm"].validate(valid => {
+        if (valid) {
+          // this.setNewsApi();
+          api.Moke_Data("/news/index", "type=top&key=123456").then(res => {
+            console.log(res);
+            this.$router.push({ path: "/dashboard" })
+            this.$store.commit("logined", true);
+            this.newsListShow = res.articles
+          });
         } else {
-          console.log(v)
+          return false;
         }
       });
     },
-    gotoForgetPwd: function ($event) {
-      event.preventDefault()
-      this.$router.push({path: '/forgetpwd'})
+    gotoForgetPwd ($event) {
+      event.preventDefault();
+      this.$router.push({ path: "/forgetpwd" });
+    },
+    setNewsApi: function () {
+      api.Moke_Data("/news/index", "type=top&key=123456").then(res => {
+        console.log(res);
+        this.$router.push({ path: "/dashboard" })
+        this.$store.commit("switch_status")
+        this.newsListShow = res.articles
+      });
     }
   }
 };
@@ -96,10 +111,6 @@ export default {
 <style lang="scss" scoped>
 body {
   background: #f6f6f6;
-}
-img {
-  width: 200px;
-  height: 200px;
 }
 .content,
 .title,
@@ -134,6 +145,6 @@ article {
   margin-bottom: 25px;
 }
 .el-input__inner {
-  background-color:#f6f6f6;
+  background-color: #f6f6f6;
 }
 </style>
