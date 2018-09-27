@@ -1,8 +1,5 @@
 <template>
     <div class="container">
-      <!-- <header>
-         <img src="../../../static/login.png">
-      </header> -->
       <t-templateLogo></t-templateLogo>
       <article>
         <div class="title">you can share your courseware here and get paid</div>
@@ -15,7 +12,6 @@
               <el-form-item prop="password">
                 <el-input v-model="loginForm.password" placeholder="password" prefix-icon="el-icon-edit" type="password" auto-complete="off"></el-input>
               </el-form-item>
-              <!-- <input v-model="message" > -->
             </div>
             <div>
                 <el-button @click="login()" class="wf" type="primary" size="medium">Login</el-button>
@@ -33,7 +29,7 @@
 </template>
 
 <script>
-import api from "./../../axios/interface.js";
+import api from "mock/axios/interface.js";
 import TemplateLogo from './../common/TempLogo.vue'
 export default {
   name: 'Login',
@@ -41,10 +37,8 @@ export default {
     't-templateLogo': TemplateLogo
   },
   created () {
-    // this.loginForm = this.$store.state.userinfo.UserForm;
   },
   beforeDestory () {
-    // this.$store.state.userinfo.UserForm = this.UserForm;
   },
   data () {
     let validateUsername = (rule, value, callback) => {
@@ -80,9 +74,12 @@ export default {
     login () {
       this.$refs["loginForm"].validate(valid => {
         if (valid) {
-          // this.setNewsApi();
           api.Moke_Data("/news/index", "type=top&key=123456").then(res => {
             console.log(res);
+            if (this.loginForm.remeber) {
+              window.localStorage.setItem('username', this.loginForm.cellphone);
+              window.localStorage.setItem('password', this.loginForm.password);
+            }
             this.$router.push({ path: "/dashboard" })
             this.$store.commit("logined", true);
             this.newsListShow = res.articles
@@ -95,14 +92,6 @@ export default {
     gotoForgetPwd ($event) {
       event.preventDefault();
       this.$router.push({ path: "/forgetpwd" });
-    },
-    setNewsApi: function () {
-      api.Moke_Data("/news/index", "type=top&key=123456").then(res => {
-        console.log(res);
-        this.$router.push({ path: "/dashboard" })
-        this.$store.commit("switch_status")
-        this.newsListShow = res.articles
-      });
     }
   }
 };
@@ -116,6 +105,9 @@ body {
 .title,
 .text-center {
   text-align: center;
+}
+.title {
+  font-size: .9rem;
 }
 .wf {
   width: 100%;

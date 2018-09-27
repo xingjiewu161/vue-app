@@ -1,18 +1,16 @@
-const state = {
+export default {
+  isLogin: false,
   userinfo: {
     UserForm: {
       username: '',
       password: ''
     }
   },
-  isLogin: false,
   mutations: {
-    logined (state, val) {
-      state.isLogin = val
+    logined (val) {
+      this.isLogin = val
     }
   },
   actions: {
   }
 };
-
-export default state;

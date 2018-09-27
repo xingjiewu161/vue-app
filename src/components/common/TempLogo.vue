@@ -1,6 +1,6 @@
 <template>
     <header>
-        <img src="../../../static/login.png">
+        <img src="./../../../static/images/login.png">
     </header>
 </template>
 
@@ -14,5 +14,9 @@ export default {
 img {
     width: 200px;
     height: 200px;
+}
+
+header {
+    padding-top: 60px;
 }
 </style>

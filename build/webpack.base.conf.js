@@ -33,7 +33,13 @@ module.exports = {
     extensions: ['.js', '.ts', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('src'),
+      'src': path.resolve(__dirname, '../src'),
+      'api': path.resolve(__dirname, '../src/api'),
+      'components': path.resolve(__dirname, '../src/components'),
+      'mock': path.resolve(__dirname, '../src/mock'),
+      'router': path.resolve(__dirname, '../src/router'),
+      'store': path.resolve(__dirname, '../src/store')
     }
   },
   module: {

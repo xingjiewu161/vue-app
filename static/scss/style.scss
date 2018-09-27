@@ -1,0 +1,34 @@
+
+body {
+    height: 100%;
+    height: 100%;
+    display: flex;
+    max-height: 620px;
+    font-size: 20px;
+    .wf {
+        width: 100%;
+    } 
+    .hf {
+        height: 100%;
+    }
+    .m-l5 {
+        margin-left: 5px
+    }
+    .p-r0 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .flex {
+        display: flex;
+        width: 100%;
+        .gold-scal {
+            flex: 0 1 .625%;
+        }
+    }
+    .jc-bw {
+        justify-content: space-between;
+    }
+    .ai-fs {
+        align-items: flex-start;
+    }
+}
