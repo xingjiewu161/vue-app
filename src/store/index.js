@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import vuex from 'vuex'
-import login from './login.js'
+import user from './modules/login.js'
+import getters from './modules/getters'
 
 Vue.use(vuex);
 export default new vuex.Store({
   modules: {
-    Login: login
+    login: user,
+    getters: getters
   }
 })

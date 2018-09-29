@@ -32,6 +32,16 @@ export default {
     goBack() {
       console.log("go back");
     }
+    // service.fetch("/news/index", "type=top&key=123456").then(res => {
+    //   console.log(res);
+    //   if (this.loginForm.remeber) {
+    //     window.localStorage.setItem('username', this.loginForm.cellphone);
+    //     window.localStorage.setItem('password', this.loginForm.password);
+    //   }
+    //   this.$router.push({ path: "/dashboard" })
+    //   this.$store.commit("logined", true);
+    //   this.newsListShow = res.articles
+    // });
   }
 };
 </script>

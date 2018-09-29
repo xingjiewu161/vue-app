@@ -14,7 +14,7 @@
               </el-form-item>
             </div>
             <div>
-                <el-button @click="login()" class="wf" type="primary" size="medium">Login</el-button>
+                <el-button @click="login()" class="wf" type="primary" size="medium" :loading="loading">Login</el-button>
             </div>
           </el-form>
             <div class="flex jc-bwt al-bas">
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import api from "mock/axios/interface.js";
+// import api from "mock/axios/interface.js";
 import TemplateLogo from './../common/TempLogo.vue'
 export default {
   name: 'Login',
@@ -52,6 +52,7 @@ export default {
         : callback();
     };
     return {
+      loading: false,
       loginForm: {
         cellphone: '',
         password: '',
@@ -74,19 +75,15 @@ export default {
     login () {
       this.$refs["loginForm"].validate(valid => {
         if (valid) {
-          api.Moke_Data("/news/index", "type=top&key=123456").then(res => {
-            console.log(res);
-            if (this.loginForm.remeber) {
-              window.localStorage.setItem('username', this.loginForm.cellphone);
-              window.localStorage.setItem('password', this.loginForm.password);
-            }
-            this.$router.push({ path: "/dashboard" })
-            this.$store.commit("logined", true);
-            this.newsListShow = res.articles
-          });
-        } else {
-          return false;
-        }
+          this.loading = true;
+          this.$store.dispatch('Login', this.loginForm).then((v) => {
+            console.log(v)
+            this.loading = false;
+            this.$router.push({ path: "dashboard" })
+          }).catch((e) => {
+            this.loading = false;
+          })
+        } else return false;
       });
     },
     gotoForgetPwd ($event) {

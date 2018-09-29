@@ -16,4 +16,9 @@ const dataList = function () {
   return {items: arr}
 }
 
+const auth = () => {
+  return {auth: {cellphone: '15761673395', token: 'quwwewehhh2328743876429323nzbxhsgdhq3'}}
+}
+
 Mock.mock('/news/index', 'post', dataList)
+Mock.mock('/auth/auther', 'post', auth)
