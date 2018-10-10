@@ -15,6 +15,7 @@ const service = axios.create({
 service.interceptors.response.use(
   response => {
     const res = response;
+    // service.defaults.headers.common['Authentication-Token'] = store.state.getters;
     if (res.status !== '200' && res.status !== 200) {
       if (res.status === '4001' || res.status === 4001) {
         MessageBox.confirm('用户名或密码错误，请重新登录', '重新登录', {

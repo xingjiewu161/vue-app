@@ -77,9 +77,10 @@ export default {
         if (valid) {
           this.loading = true;
           this.$store.dispatch('Login', this.loginForm).then((v) => {
-            console.log(v)
             this.loading = false;
+            console.log(this.$store.state)
             this.$router.push({ path: "dashboard" })
+            this.$store.state.login.token ? this.$router.replace({ path: "dashboard" }) : this.$message('Current user infomation exception ');
           }).catch((e) => {
             this.loading = false;
           })

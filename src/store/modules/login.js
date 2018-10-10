@@ -1,17 +1,20 @@
 import { login, regist, logout } from 'api/login'
 // import { setName, setToken } from './auth.js'
+import getters from './getters.js'
 
 const user = {
   state: {
     cellphone: '',
     token: ''
   },
+  getters: getters,
   mutations: {
     SET_NAME: (state, cellphone) => {
       state.cellphone = cellphone;
     },
     SET_TOKEN: (state, token) => {
       state.token = token;
+      window.localStorage.setItem('token', token)
     }
   },
   actions: {
@@ -19,11 +22,11 @@ const user = {
       const cellphone = userInfo.cellphone.trim();
       const password = userInfo.password.trim();
       return new Promise((resolve, reject) => {
-        console.log(resolve, reject)
         login(cellphone, password).then(response => {
           const data = response.data;
-          commit('SET_NAME', data.cellphone);
-          commit('SET_TOKEN', data.token);
+          console.log(data)
+          commit('SET_NAME', data.auth.cellphone);
+          commit('SET_TOKEN', data.auth.token);
           // setName(cellphone);
           // setToken(data.token);
           resolve(response);
@@ -39,8 +42,8 @@ const user = {
       return new Promise((resolve, reject) => {
         regist(cellphone, password).then(response => {
           const data = response.data;
-          commit('SET_NAME', data.cellphone);
-          commit('SET_TOKEN', data.token);
+          commit('SET_NAME', data.auth.cellphone);
+          commit('SET_TOKEN', data.auth.token);
           resolve(response);
         }).catch(error => {
           reject(error)

@@ -1,7 +1,10 @@
 const Mock = require('mockjs');
 
 const Random = Mock.Random;
-
+/**
+ * @description return courseware list
+ * @author Quicksand is better than time
+ */
 const dataList = function () {
   let arr = [];
   for (let i = 0; i < 100; i++) {
@@ -15,10 +18,42 @@ const dataList = function () {
   }
   return {items: arr}
 }
-
+/**
+ * @description return current user login infomation
+ * @author Quicksand is better than time
+ */
 const auth = () => {
-  return {auth: {cellphone: '15761673395', token: 'quwwewehhh2328743876429323nzbxhsgdhq3'}}
+  return {auth: {cellphone: '15761673395', token: 'qqqqqqqqqqqqqqqqqq11111111111wwww'}}
 }
 
+const carouse = function () {
+  let arr = [
+    {
+      id: Random.date() + ' ' + Random.time(),
+      url: '../../static/images/carouse1.png',
+      title: 'crouse image'
+    },
+    {
+      id: Random.date() + ' ' + Random.time(),
+      url: '../../static/images/carouse2.png',
+      title: 'crouse image'
+    },
+    {
+      id: Random.date() + ' ' + Random.time(),
+      url: '../../static/images/carouse3.png',
+      title: 'crouse image'
+    },
+    {
+      id: Random.date() + ' ' + Random.time(),
+      url: '../../static/images/carouse4.png',
+      title: 'crouse image'
+    }
+  ];
+  return {items: arr};
+}
+
+// courseware list
 Mock.mock('/news/index', 'post', dataList)
+// auth info
 Mock.mock('/auth/auther', 'post', auth)
+Mock.mock('/dashboard/carouse', 'get', carouse)

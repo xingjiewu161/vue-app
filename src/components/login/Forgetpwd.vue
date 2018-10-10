@@ -5,7 +5,7 @@
             <span class="el-icon-arrow-left"></span>back
           </span>
         </header>
-        <t-templateLogo></t-templateLogo>
+        <t-templateLogo style="padding-top: 20px"></t-templateLogo>
         <div class="login-form">
          <el-form :model="paswordForm" :rules="rules" status-icon ref="loginForm">
             <div class="input-group">

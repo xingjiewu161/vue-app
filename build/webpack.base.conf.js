@@ -39,7 +39,9 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components'),
       'mock': path.resolve(__dirname, '../src/mock'),
       'router': path.resolve(__dirname, '../src/router'),
-      'store': path.resolve(__dirname, '../src/store')
+      'store': path.resolve(__dirname, '../src/store'),
+      'static': path.resolve(__dirname, '../static/images'),
+      'static-icon': path.resolve(__dirname, '../static/images')
     }
   },
   module: {
