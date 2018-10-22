@@ -1,60 +1,150 @@
 <template>
   <div class="out-container">
     <div class="das-container">
-      <header class="flex jc-bw p-row-0 p-10">
-        <span @click="goBack()">
-          <span class="el-icon-arrow-left"></span> Back
-        </span>
-      </header>
-      <el-main class="carousel">
-        <el-carousel  v-if="carouse[0]" :interval="5000" arrow="always" height="125px">
-            <el-carousel-item v-for="(item,index) in carouse" :key="index">
-              <h3><img v-bind:src="item.url" alt="carouse" /></h3>
-            </el-carousel-item>
-        </el-carousel>
-        <md-button class="md-raised md-primary" v-md-theme="'green'">绿色</md-button>
+      <t-top-goback></t-top-goback>
+      <el-main class="main">
+        <t-arouse></t-arouse>
+        <div class="fl-row pd-5">
+          <el-button class="bg-gray fl-gold-b mg-r5" icon="el-icon-location">地址</el-button>
+          <el-input class="fl-auto" placeholder="请输入内容" prefix-icon="el-icon-search"></el-input>
+        </div>
+        <div class="group-item">
+          <div class="inner-group">
+             <div class="item" v-for="(book, index) in books" :key="book.id" :index="index" :book="book">
+              <div class="media">
+                <img src="/static/images/shanghai1.jpg" alt="People">
+              </div>
+              <div class="title">
+                <div>{{book.name}}</div>
+                <div>{{book.number}}本书</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="group-list">
+          <md-tabs class="md-transparent" md-alignment="fixed">
+            <md-tab id="tab-home" md-label="新上架">
+              <p>122</p>
+            </md-tab>
+            <md-tab id="tab-posts" md-label="高分"></md-tab>
+            <md-tab id="tab-favorites" md-label="销量"></md-tab>
+          </md-tabs>
+          <md-card>
+            <md-card-header>
+              <md-card-header-text>
+                <div class="md-title">Media card</div>
+                <div class="md-subhead">Normal size</div>
+              </md-card-header-text>
+              <md-card-media>
+                <img src="/static/images/shanghai1.jpg" alt="People">
+              </md-card-media>
+            </md-card-header>
+            <md-card-actions>
+              <md-button>Action</md-button>
+              <md-button>Action</md-button>
+            </md-card-actions>
+          </md-card>
+          <md-card>
+            <md-card-header>
+              <md-card-header-text>
+                <div class="md-title">Media card</div>
+                <div class="md-subhead">Normal size</div>
+              </md-card-header-text>
+              <md-card-media>
+                <img src="/static/images/shanghai1.jpg" alt="People">
+              </md-card-media>
+            </md-card-header>
+            <md-card-actions>
+              <md-button>Action</md-button>
+              <md-button>Action</md-button>
+            </md-card-actions>
+          </md-card>
+          <md-card>
+            <md-card-header>
+              <md-card-header-text>
+                <div class="md-title">Media card</div>
+                <div class="md-subhead">Normal size</div>
+              </md-card-header-text>
+              <md-card-media>
+                <img src="/static/images/shanghai1.jpg" alt="People">
+              </md-card-media>
+            </md-card-header>
+            <md-card-actions>
+              <md-button>Action</md-button>
+              <md-button>Action</md-button>
+            </md-card-actions>
+          </md-card>
+        </div>
       </el-main>
     </div>
     <footer>
-      <md-bottom-bar>
-        <!-- <md-bottom-bar-item md-icon-src="static/icons/home.svg">Recents</md-bottom-bar-item>
-        <md-bottom-bar-item md-icon-src="/static/icons/tab_personal.svg">Nearby</md-bottom-bar-item> -->
-        <md-bottom-bar-item md-icon="history">最近</md-bottom-bar-item>
-        <md-bottom-bar-item md-icon="favorite" md-active>喜欢</md-bottom-bar-item>
-        <md-bottom-bar-item md-icon="near_me">附近</md-bottom-bar-item>
-      </md-bottom-bar>
+        <md-bottom-bar md-sync-route>
+          <md-bottom-bar-item md-label="Home" md-icon="/static/icons/home1.svg"></md-bottom-bar-item>
+          <md-bottom-bar-item md-label="Mine" md-icon="/static/icons/mine1.svg"></md-bottom-bar-item>
+        </md-bottom-bar>
     </footer>
   </div>
 </template>
 
 <script>
-import { getCarouse } from "api/dashboard.js";
-
+import Home from "./home/Home.vue";
+import Carouse from "./common/Carouse.vue";
+import TopGoback from "./common/TopGoback.vue";
 export default {
   name: "Dashboard",
+  components: {
+    "t-home": Home,
+    "t-arouse": Carouse,
+    "t-top-goback": TopGoback
+  },
   data() {
     return {
-      carouse: [null]
+      books: [
+        {
+          id: 1,
+          name: "卡勒德·胡赛尼《追风筝的人》",
+          number: 2
+        },
+        {
+          id: 2,
+          name: "玛格丽特·米切尔《飘》",
+          number: 4
+        },
+        {
+          id: 3,
+          name: "莫言《生死疲劳》",
+          number: 1
+        },
+        {
+          id: 4,
+          name: '全球时尚圣经《VOGUE》第123期',
+          number: 1
+        },
+        {
+          id: 5,
+          name: "玛格丽特·米切尔《飘》",
+          number: 1
+        },
+        {
+          id: 6,
+          name: "玛格丽特·米切尔《飘》",
+          number: 1
+        }
+      ]
     };
-  },
-  created: function() {
-    getCarouse().then(res => {
-      console.log(res.data.items);
-      this.carouse = res ? [...res.data.items] : [];
-    });
   },
   methods: {
     details: user => {
       return user;
     },
-    goBack() {
-      this.$router.back(-1);
+    getCurrentTab(e) {
+      console.log(e, "bar", "123");
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-$height: 125px;
+$height: 6.25rem;
 .out-container {
   display: flex;
   height: 100%;
@@ -69,24 +159,73 @@ $height: 125px;
       vertical-align: middle;
     }
   }
-  .el-footer {
-    display: inline-block;
-    vertical-align: bottom;
-  }
   .el-header {
     color: #333;
     line-height: 3rem;
   }
-  .carousel {
+  .main {
     padding: 0;
-    .el-carousel__item h3 {
-      color: #475669;
-      font-size: 14px;
-      opacity: 0.75;
-      height: $height;
-      margin: 0;
-      img {
+  }
+  .bg-gray {
+    background-color: #f3f3f4;
+  }
+}
+footer button.md-button /deep/ .md-bottom-bar-label {
+  color: #707070;
+}
+footer button.md-button.md-active /deep/ .md-bottom-bar-label {
+  color: #409eff;
+}
+.group-item {
+  display: flex;
+  overflow: hidden;
+  .inner-group {
+    width: 60rem;
+    overflow-x: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 0 0.25rem;
+    display: -webkit-box;
+    .item {
+      width: 8rem;
+      height: 4.5rem;
+      position: relative;
+      margin-right: 0.25rem;
+      .media {
+        position: relative;
+        overflow: hidden;
+        border-radius: 0.35rem;
+        &::before {
+          width: 100%;
+          padding-top: 56.25%;
+          display: block;
+          content: " ";
+        }
+        img {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          left: 0;
+          transform: translateY(-50%);
+        }
+      }
+      .title {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+        font-size: 0.75rem;
+        background: rgba(0, 0, 0, 0.4);
         height: 100%;
+        width: 100%;
+        border-radius: 0.35rem;
+        align-items: flex-start;
+        text-align: left;
+        padding: 5px;
       }
     }
   }

@@ -34,4 +34,63 @@ body {
     .ai-fs {
         align-items: flex-start;
     }
+    // flex start
+    .fl {
+        display: flex;
+    }
+    .fl-row {
+        display: flex;
+        flex-flow: row nowrap;
+    }
+    .fl-col {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .fl-gold-b {
+        flex: 0 1 30.82%
+    }
+    .fl-gold-t {
+        flex: 0 1 61.8%
+    }
+    .fl-auto {
+        flex: auto;
+    }
+    // flex end
+
+    // padding start
+    .pd-5 {
+        padding: 5px;
+    }
+    .pd-t5 {
+        padding-top: 5px;
+    }
+    .pd-b5 {
+        padding-bottom: 5px;
+    }
+    .pd-l5 {
+        padding-left: 5px;
+    }
+    .pd-r5 {
+        padding-right: 5px;
+    }
+    // padding end
+
+    // margin start
+    .mg-5 {
+        margin: 5px;
+    }
+    .mg-t5 {
+        margin-top: 5px;
+    }
+    .mg-b5 {
+        margin-bottom: 5px;
+    }
+    .mg-l5 {
+        margin-left: 5px;
+    }
+    .mg-r5 {
+        margin-right: 5px;
+    }
+    // omargin end
 }

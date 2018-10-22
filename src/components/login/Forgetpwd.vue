@@ -1,10 +1,6 @@
 <template>
     <div class="container">
-        <header class="top-goback">
-          <span  @click="goBack()">
-            <span class="el-icon-arrow-left"></span>back
-          </span>
-        </header>
+        <t-top-goback></t-top-goback>
         <t-templateLogo style="padding-top: 20px"></t-templateLogo>
         <div class="login-form">
          <el-form :model="paswordForm" :rules="rules" status-icon ref="loginForm">
@@ -36,11 +32,13 @@
 </template>
 
 <script>
-import TemplateLogo from "./../common/TempLogo.vue";
+import TemplateLogo from "./../common/TempLogo.vue"
+import TopGoback from "./../common/TopGoback.vue"
 export default {
   name: "Forgetpwd",
   components: {
-    "t-templateLogo": TemplateLogo
+    "t-templateLogo": TemplateLogo,
+    "t-top-goback": TopGoback
   },
   data () {
     return {
@@ -57,9 +55,6 @@ export default {
     };
   },
   methods: {
-    goBack () {
-      this.$router.push({ path: "/" });
-    },
     resetPaswd () {
       console.log("find password");
     },
@@ -94,12 +89,6 @@ export default {
   }
   .el-form-item {
     margin-bottom: 15px;
-  }
-  .top-goback {
-    flex: 1;
-    text-align: left;
-    padding: 10px;
-    font-size: 0.9rem;
   }
   .gold-scal {
     flex: 0 1 0.618%;
