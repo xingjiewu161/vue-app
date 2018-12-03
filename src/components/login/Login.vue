@@ -17,30 +17,27 @@
                 <el-button @click="login()" class="wf" type="primary" size="medium" :loading="loading">Login</el-button>
             </div>
           </el-form>
-            <div class="flex jc-bwt al-bas">
-                <el-checkbox-group v-model="loginForm.remeber">
-                  <el-checkbox label="remember me"></el-checkbox >
-                </el-checkbox-group>
-                <el-button type="text" @click="gotoForgetPwd($event)">forget password</el-button>
-            </div>
+        </div>
+        <div class="flex jc-bwt al-cen">
+            <el-checkbox-group v-model="loginForm.remeber">
+              <el-checkbox label="remember me"></el-checkbox >
+            </el-checkbox-group>
+            <el-button type="text" @click="gotoForgetPwd($event)">forget password</el-button>
         </div>
       </article>
     </div>
 </template>
 
 <script>
-// import api from "mock/axios/interface.js";
-import TemplateLogo from './../common/TempLogo.vue'
+import TemplateLogo from "./../common/TempLogo.vue";
 export default {
-  name: 'Login',
+  name: "Login",
   components: {
-    't-templateLogo': TemplateLogo
+    "t-templateLogo": TemplateLogo
   },
-  created () {
-  },
-  beforeDestory () {
-  },
-  data () {
+  created() {},
+  beforeDestory() {},
+  data() {
     let validateUsername = (rule, value, callback) => {
       !/^\d+$/.test(value)
         ? callback(new Error("手机号只能输入数字！"))
@@ -54,8 +51,8 @@ export default {
     return {
       loading: false,
       loginForm: {
-        cellphone: '',
-        password: '',
+        cellphone: "",
+        password: "",
         remeber: false
       },
       rules: {
@@ -72,22 +69,27 @@ export default {
     };
   },
   methods: {
-    login () {
+    login() {
       this.$refs["loginForm"].validate(valid => {
         if (valid) {
           this.loading = true;
-          this.$store.dispatch('Login', this.loginForm).then((v) => {
-            this.loading = false;
-            console.log(this.$store.state)
-            this.$router.push({ path: "dashboard" })
-            this.$store.state.login.token ? this.$router.replace({ path: "dashboard" }) : this.$message('Current user infomation exception ');
-          }).catch((e) => {
-            this.loading = false;
-          })
+          this.$store
+            .dispatch("Login", this.loginForm)
+            .then(v => {
+              this.loading = false;
+              console.log(this.$store.state);
+              this.$router.push({ path: "basic" });
+              this.$store.state.login.token
+                ? this.$router.replace({ path: "basic" })
+                : this.$message("Current user infomation exception ");
+            })
+            .catch(e => {
+              this.loading = false;
+            });
         } else return false;
       });
     },
-    gotoForgetPwd ($event) {
+    gotoForgetPwd($event) {
       event.preventDefault();
       this.$router.push({ path: "/forgetpwd" });
     }
@@ -105,7 +107,7 @@ body {
   text-align: center;
 }
 .title {
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 .wf {
   width: 100%;
@@ -116,8 +118,8 @@ body {
 .jc-bwt {
   justify-content: space-between;
 }
-.al-bas {
-  align-items: baseline;
+.al-cen {
+  align-items: center;
 }
 article {
   padding: 0 25px 25px;
@@ -126,13 +128,11 @@ article {
   padding: 0 40px 10px 40px;
 }
 .sub-content {
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
 .el-form-item {
   margin-bottom: 20px;
-}
-.input-group {
-  margin-bottom: 25px;
 }
 .el-input__inner {
   background-color: #f6f6f6;

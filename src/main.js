@@ -6,17 +6,19 @@ import './mock/mock.js'
 import store from './store'
 import router from './router'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
+import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.css'
 import './../static/scss/style.scss'
 import './../static/scss/icon.css'
-
+import 'animate.css/animate.min.css'
+import 'antd/dist/antd.min.css'
+import touch from './core/tool/touch'
 Vue.use(ElementUI)
 Vue.use(VueMaterial)
 Vue.config.productionTip = false
-
+Vue.use(touch)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

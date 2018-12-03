@@ -35,20 +35,135 @@ const carouse = function () {
     },
     {
       id: Random.date() + ' ' + Random.time(),
-      url: '../../static/images/carouse2.png',
+      url: '../../static/images/carouse1.png',
       title: 'crouse image'
     },
     {
       id: Random.date() + ' ' + Random.time(),
-      url: '../../static/images/carouse3.png',
+      url: '../../static/images/carouse1.png',
       title: 'crouse image'
     },
     {
       id: Random.date() + ' ' + Random.time(),
-      url: '../../static/images/carouse4.png',
+      url: '../../static/images/carouse1.png',
       title: 'crouse image'
     }
   ];
+  return {items: arr};
+}
+
+const newbook = function () {
+  let arr = [
+    {
+      url: '../../static/images/book3.png',
+      title: '不为我们改变的世界',
+      author: '一诺/华章',
+      core: '7.8',
+      price: '35.00',
+      id: '123',
+      car: '../../static/images/cart_light.png'
+    },
+    {
+      url: '../../static/images/book3.png',
+      title: '不为我们改变的世界',
+      author: '一诺/华章',
+      core: '7.8',
+      price: '35.00',
+      id: '456',
+      car: '../../static/images/cart_light.png'
+    },
+    {
+      url: '../../static/images/book3.png',
+      title: '不为我们改变的世界',
+      author: '一诺/华章',
+      core: '7.8',
+      price: '35.00',
+      id: '789',
+      car: '../../static/images/cart_light.png'
+    },
+    {
+      url: '../../static/images/book3.png',
+      title: '不为我们改变的世界',
+      author: '一诺/华章',
+      core: '7.8',
+      price: '35.00',
+      id: '012',
+      car: '../../static/images/cart_light.png'
+    }
+  ]
+  return {items: arr};
+}
+const sellbook = function () {
+  let arr = [
+    {
+      url: '../../static/images/book2.png',
+      title: '生死疲劳',
+      author: '莫言/作家出版社/2012-10',
+      core: '8.5',
+      price: '55.00',
+      id: '123',
+      car: '../../static/images/cart_light.png'
+    },
+    {
+      url: '../../static/images/book2.png',
+      title: '生死疲劳',
+      author: '莫言/作家出版社/2012-10',
+      core: '8.5',
+      price: '55.00',
+      id: '123',
+      car: '../../static/images/cart_light.png'
+    },
+    {
+      url: '../../static/images/book2.png',
+      title: '生死疲劳',
+      author: '莫言/作家出版社/2012-10',
+      core: '8.5',
+      price: '55.00',
+      id: '123',
+      car: '../../static/images/cart_light.png'
+    },
+    {
+      url: '../../static/images/book2.png',
+      title: '生死疲劳',
+      author: '莫言/作家出版社/2012-10',
+      core: '8.5',
+      price: '55.00',
+      id: '123',
+      car: '../../static/images/cart_light.png'
+    }
+  ]
+  return {items: arr};
+}
+const scorebook = function () {
+  let arr = [
+    {
+      url: '../../static/images/book1.png',
+      title: '野火集',
+      author: '龙应台',
+      core: '8.9',
+      price: '25.00',
+      id: '123',
+      car: '../../static/images/cart_light.png'
+    },
+    {
+      url: '../../static/images/book1.png',
+      title: '野火集',
+      author: '龙应台',
+      core: '8.9',
+      price: '25.00',
+      id: '123',
+      car: '../../static/images/cart_light.png'
+    },
+    {
+      url: '../../static/images/book1.png',
+      title: '野火集',
+      author: '龙应台',
+      core: '8.9',
+      price: '25.00',
+      id: '123',
+      car: '../../static/images/cart_light.png'
+    }
+  ]
   return {items: arr};
 }
 
@@ -57,3 +172,6 @@ Mock.mock('/news/index', 'post', dataList)
 // auth info
 Mock.mock('/auth/auther', 'post', auth)
 Mock.mock('/dashboard/carouse', 'get', carouse)
+Mock.mock('/dashboard/newBook', 'get', newbook)
+Mock.mock('/dashboard/sellBook', 'get', sellbook)
+Mock.mock('/dashboard/scoreBook', 'get', scorebook)

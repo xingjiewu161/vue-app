@@ -1,7 +1,7 @@
 <template>
     <header class="flex jc-bw p-row-0 p-10 top-goback">
         <span @click="goBack()">
-          <span class="el-icon-arrow-left"></span> back
+          <span class="el-icon-arrow-left"></span> 返回
         </span>
     </header>
 </template>
@@ -9,12 +9,18 @@
 <script>
 export default {
   name: "TopGoback",
+  props: {
+    url: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {};
   },
   methods: {
     goBack() {
-      this.$router.back(-1);
+      this.$router.replace(this.url);
     }
   }
 };

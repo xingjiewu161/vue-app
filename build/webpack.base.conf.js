@@ -41,7 +41,7 @@ module.exports = {
       'router': path.resolve(__dirname, '../src/router'),
       'store': path.resolve(__dirname, '../src/store'),
       'static': path.resolve(__dirname, '../static/images'),
-      'static-icon': path.resolve(__dirname, '../static/images')
+      'icons': path.resolve(__dirname, '../static/icons')
     }
   },
   module: {
@@ -60,6 +60,7 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
+        exclude: [path.resolve(__dirname,'../src/images/icons')], //排除字体图标文件
         options: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
@@ -80,15 +81,15 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-sprite-loader',
+        include: [path.resolve(__dirname, '../src/images/icons')],
+        options: {
+            symbolId: 'icon-[name]' //这个没有生效，生效的是默认的name
+        }
       }
-      // {
-      //   test: /\.tsx?$/,
-      //   loader: 'ts-loader',
-      //   exclude: /node_modules/,
-      //   options: {
-      //     appendTsSuffixTo: [/\.vue$/]
-      //   }
-      // }
     ]
   },
   node: {

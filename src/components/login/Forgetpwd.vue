@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <t-top-goback></t-top-goback>
+        <t-top-goback :url="'/'"></t-top-goback>
         <t-templateLogo style="padding-top: 20px"></t-templateLogo>
         <div class="login-form">
          <el-form :model="paswordForm" :rules="rules" status-icon ref="loginForm">
