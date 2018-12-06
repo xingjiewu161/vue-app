@@ -179,6 +179,7 @@ footer button.md-button.md-active /deep/ .md-bottom-bar-label {
 .group-item {
   display: flex;
   overflow: hidden;
+  justify-content: center;
   .inner-group {
     width: 60rem;
     overflow-x: auto;

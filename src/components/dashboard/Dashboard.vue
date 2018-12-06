@@ -20,8 +20,8 @@
             </div>
           </div>
       </div>
-      <div class="group-list" v-drag="{opacity: '0', zIndex: '0', top: '-4%'}">
-           <div class="loader">
+      <div class="group-list" v-drag="{opacity: '0', zIndex: '0', top: '4'}">
+           <div class="loader" id="loader" ref="loader">
             <svg version="1.1" id="loader-one" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
               width="40px" height="40px" background="#ffffff" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
             <path fill="#ffffff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
@@ -58,6 +58,7 @@ import Tab from "./../common/tabs/Tab.vue"
 import Newbook from "./SellList/Newbook.vue"
 import HeightSellbook from "./SellList/HeightSellbook.vue"
 import HeightScorebook from "./SellList/HeightScorebook.vue"
+import { getNewBook } from 'api/dashboard.js'
 export default {
   name: "Dashboard",
   components: {
@@ -135,23 +136,52 @@ export default {
   },
   directives: {
     drag: {
-      inserted: function (el, bidding) {
-        console.log(el, bidding, bidding.value.opacity, bidding.value.top)
-        let oDiv = el;
-        oDiv.ontouchstart = function () {
-          console.log(oDiv)
+      inserted: function (el, bidding, vnode) {
+        console.log(bidding, vnode.context.$refs)
+        console.log('vnode', vnode)
+        let topY;
+        let scrollY = +bidding.value.top;
+        let loader = vnode.context.$refs.loader;
+        loader.style.opacity = bidding.value.opacity;
+        loader.style.zIndex = bidding.value.zIndex;
+        loader.style.top = bidding.value.top + '%';
+        el.ontouchstart = function () {
           document.ontouchmove = function (ev) {
-            console.log('ontouchmove', ev)
-            // ev.preventDefault();
-            // let disX = ev.clientX - oDiv.offsetLeft;
-            // let disY = ev.clientY - oDiv.offsetTop;
-            // let l = ev.clientX - disX;
-            // let t = ev.clientY - disY;
+            scrollY += 0.8
+            loader.style.transition = `opacity 1s, z-index .5s, top .5s`
+            loader.style.zIndex = 1;
+            loader.style.opacity = 1
+            if (scrollY < 35) {
+              loader.style.top = `${scrollY}%`;
+              topY = scrollY
+            } else {
+              loader.style.top = `35%`;
+              topY = 35;
+            }
           };
           document.ontouchend = function () {
-            console.log('onmouseup')
-            document.onmousemove = null;
-            document.onmouseup = null;
+            document.onmousemove = document.onmouseup = null;
+            console.log(vnode.context)
+            if (topY > 20) {
+              loader.style.top = `20%`;
+              loader.style.transition = `top .5s`;
+              getNewBook().then(res => {
+                if (res) {
+                  this.newbooks = [...res.data.items];
+                  setTimeout(_ => {
+                    loader.style.opacity = bidding.value.opacity;
+                    loader.style.zIndex = bidding.value.zIndex;
+                    loader.style.top = bidding.value.top + '%';
+                  }, 2000)
+                } else {
+                  this.newbooks = []
+                }
+              });
+            } else {
+              loader.style.opacity = bidding.value.opacity;
+              loader.style.zIndex = bidding.value.zIndex;
+              loader.style.top = bidding.value.top + '%';
+            }
           };
         }
       }
@@ -245,10 +275,7 @@ $height: 6.25rem;
 .group-list {
   position: relative;
   .loader {
-    top: -4%;
-    z-index: -1;
     left: 50%;
-    opacity: 0;
     width: 100%;
     position: absolute;
     text-align: center;
