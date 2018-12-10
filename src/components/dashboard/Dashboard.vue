@@ -20,7 +20,7 @@
             </div>
           </div>
       </div>
-      <div class="group-list" v-drag="{opacity: '0', zIndex: '0', top: '4'}">
+      <div class="group-list" v-drag="{opacity: '0', zIndex: '0', top: '4', fun: changeAnimate}">
            <div class="loader" id="loader" ref="loader">
             <svg version="1.1" id="loader-one" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
               width="40px" height="40px" background="#ffffff" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
@@ -37,13 +37,13 @@
           </div>
           <t-tabs :options="{ useUrlFragment: false, defaultTabHash: 'newbook' }" v-on:changed="selectedTab" ref="child">
             <t-tab name="上新" id="newbook">
-              <t-newbook class="animated slideInLeft faster book-conn"></t-newbook>
+              <t-newbook class="animated slideInLeft faster book-conn" ref="newbook"></t-newbook>
             </t-tab>
-            <t-tab name="高分" id="heightscroll">
-              <t-sellbook class="animated slideInLeft faster book-conn"></t-sellbook>
+            <t-tab name="高分" id="hightscroll">
+              <t-sellbook class="animated slideInLeft faster book-conn" ref="hightscroll"></t-sellbook>
             </t-tab>
-            <t-tab name="销量" id="heightsell">
-              <t-scorebook class="animated slideInLeft faster book-conn"></t-scorebook>
+            <t-tab name="销量" id="hightsell">
+              <t-scorebook class="animated slideInLeft faster book-conn" ref="hightsell"></t-scorebook>
             </t-tab>
           </t-tabs>
       </div>
@@ -58,7 +58,6 @@ import Tab from "./../common/tabs/Tab.vue"
 import Newbook from "./SellList/Newbook.vue"
 import HeightSellbook from "./SellList/HeightSellbook.vue"
 import HeightScorebook from "./SellList/HeightScorebook.vue"
-import { getNewBook } from 'api/dashboard.js'
 export default {
   name: "Dashboard",
   components: {
@@ -132,55 +131,69 @@ export default {
     selectedTab (tab) {
       this.currentComponent = tab.tab.hash;
       this.tabIndex = tab.index;
+      console.log(this.tabIndex);
+    },
+    changeAnimate(e, type, o, z, t) {
+      switch (type) {
+      case 'first':
+        e.style.opacity = o;
+        e.style.zIndex = z;
+        e.style.top = t + '%'; break;
+      case 'second':
+        e.style.transition = `opacity 1s, z-index .5s, top .5s`
+        e.style.zIndex = 1;
+        e.style.opacity = 1; break;
+      case 'third':
+        e.style.top = `20%`;
+        e.style.transition = `top .5s`; break;
+      case 'fourth':
+        e.style.transition = `opacity 1s, z-index .5s, top .5s`
+        e.style.zIndex = 1;
+        e.style.top = `${t}%`;
+        e.style.opacity = 1; break;
+      }
     }
   },
   directives: {
     drag: {
       inserted: function (el, bidding, vnode) {
-        console.log(bidding, vnode.context.$refs)
-        console.log('vnode', vnode)
         let topY;
         let scrollY = +bidding.value.top;
-        let loader = vnode.context.$refs.loader;
-        loader.style.opacity = bidding.value.opacity;
-        loader.style.zIndex = bidding.value.zIndex;
-        loader.style.top = bidding.value.top + '%';
+        let loader = vnode.context.$refs.loader
+        vnode.context.changeAnimate(loader, 'first', bidding.value.opacity, bidding.value.zIndex, bidding.value.top);
         el.ontouchstart = function () {
           document.ontouchmove = function (ev) {
             scrollY += 0.8
-            loader.style.transition = `opacity 1s, z-index .5s, top .5s`
-            loader.style.zIndex = 1;
-            loader.style.opacity = 1
+            vnode.context.changeAnimate(loader, 'second', 1, 1, bidding.value.top)
             if (scrollY < 35) {
-              loader.style.top = `${scrollY}%`;
+              vnode.context.changeAnimate(loader, 'fourth', 1, 1, scrollY)
               topY = scrollY
             } else {
-              loader.style.top = `35%`;
+              vnode.context.changeAnimate(loader, 'fourth', 1, 1, 35)
               topY = 35;
             }
           };
           document.ontouchend = function () {
             document.onmousemove = document.onmouseup = null;
-            console.log(vnode.context)
+            console.log('index', +vnode.context.tabIndex)
             if (topY > 20) {
-              loader.style.top = `20%`;
-              loader.style.transition = `top .5s`;
-              getNewBook().then(res => {
-                if (res) {
-                  this.newbooks = [...res.data.items];
-                  setTimeout(_ => {
-                    loader.style.opacity = bidding.value.opacity;
-                    loader.style.zIndex = bidding.value.zIndex;
-                    loader.style.top = bidding.value.top + '%';
-                  }, 2000)
-                } else {
-                  this.newbooks = []
-                }
-              });
+              vnode.context.changeAnimate(loader, 'third', 1, 1, 20)
+              switch (+vnode.context.tabIndex) {
+              case 0:
+                vnode.context.$refs.newbook.loadBookList().then(res => {
+                  vnode.context.changeAnimate(loader, 'first', bidding.value.opacity, bidding.value.zIndex, bidding.value.top);
+                }); break;
+              case 1:
+                vnode.context.$refs.hightscroll.loadBookList().then(res => {
+                  vnode.context.changeAnimate(loader, 'first', bidding.value.opacity, bidding.value.zIndex, bidding.value.top);
+                }); break;
+              case 2:
+                vnode.context.$refs.hightsell.loadBookList().then(res => {
+                  vnode.context.changeAnimate(loader, 'first', bidding.value.opacity, bidding.value.zIndex, bidding.value.top);
+                }); break;
+              }
             } else {
-              loader.style.opacity = bidding.value.opacity;
-              loader.style.zIndex = bidding.value.zIndex;
-              loader.style.top = bidding.value.top + '%';
+              vnode.context.changeAnimate(loader, 'first', bidding.value.opacity, bidding.value.zIndex, bidding.value.top);
             }
           };
         }

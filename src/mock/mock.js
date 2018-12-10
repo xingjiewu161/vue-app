@@ -56,7 +56,7 @@ const newbook = function () {
   let arr = [
     {
       url: '../../static/images/book3.png',
-      title: '不为我们改变的世界',
+      title: '不为我们改变的世界1',
       author: '一诺/华章',
       core: '7.8',
       price: '35.00',
@@ -65,7 +65,7 @@ const newbook = function () {
     },
     {
       url: '../../static/images/book3.png',
-      title: '不为我们改变的世界',
+      title: '不为我们改变的世界2',
       author: '一诺/华章',
       core: '7.8',
       price: '35.00',
@@ -74,7 +74,7 @@ const newbook = function () {
     },
     {
       url: '../../static/images/book3.png',
-      title: '不为我们改变的世界',
+      title: '不为我们改变的世界3',
       author: '一诺/华章',
       core: '7.8',
       price: '35.00',
@@ -83,7 +83,7 @@ const newbook = function () {
     },
     {
       url: '../../static/images/book3.png',
-      title: '不为我们改变的世界',
+      title: '不为我们改变的世界4',
       author: '一诺/华章',
       core: '7.8',
       price: '35.00',

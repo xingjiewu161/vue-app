@@ -36,9 +36,34 @@ export default {
     };
   },
   created() {
-    getScoreBook().then(res => {
-      this.scorebooks = res ? [...res.data.items] : [];
-    });
+    this.loadBookList();
+  },
+  methods: {
+    loadBookList() {
+      return new Promise((resolve, reject) => {
+        getScoreBook().then(res => {
+          if (res) {
+            this.scorebooks = this.shuffle(res.data.items);
+          } else {
+            this.scorebooks = [];
+          }
+          // this.newbooks = res ? [...res.data.items] : [];
+          setTimeout(_ => {
+            resolve({isLoad: true})
+          }, 2000)
+        })
+      }).catch(error => {
+        throw error
+      })
+    },
+    shuffle (arr) {
+      let i = arr.length;
+      while (i) {
+        let j = Math.floor(Math.random() * i--);
+        [arr[j], arr[i]] = [arr[i], arr[j]];
+      }
+      return arr;
+    }
   }
 };
 </script>

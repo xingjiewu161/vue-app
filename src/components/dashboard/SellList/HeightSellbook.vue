@@ -36,9 +36,34 @@ export default {
     };
   },
   created() {
-    getSellBook().then(res => {
-      this.sellbooks = res ? [...res.data.items] : [];
-    });
+    this.loadBookList()
+  },
+  methods: {
+    loadBookList() {
+      return new Promise((resolve, reject) => {
+        getSellBook().then(res => {
+          if (res) {
+            this.sellbooks = this.shuffle(res.data.items);
+          } else {
+            this.sellbooks = [];
+          }
+          // this.newbooks = res ? [...res.data.items] : [];
+          setTimeout(_ => {
+            resolve({isLoad: true})
+          }, 2000)
+        })
+      }).catch(error => {
+        throw error
+      })
+    },
+    shuffle (arr) {
+      let i = arr.length;
+      while (i) {
+        let j = Math.floor(Math.random() * i--);
+        [arr[j], arr[i]] = [arr[i], arr[j]];
+      }
+      return arr;
+    }
   }
 };
 </script>

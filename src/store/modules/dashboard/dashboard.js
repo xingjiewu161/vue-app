@@ -1,5 +1,7 @@
 const dashboard = {
-  state: {},
+  state: {
+    isRefresh: false
+  },
   getters: {},
   mutations: {},
   actions: {}
