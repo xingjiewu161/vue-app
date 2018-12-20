@@ -5,6 +5,7 @@ import Basic from '@/components/Basic'
 import Login from '@/components/Login/Login'
 import Forgetpwd from '@/components/Login/Forgetpwd'
 import store from '../store'
+// import Mine from '@/components/mine/Mine'
 
 if (sessionStorage.getItem('token')) {
   store.commit('SET_TOKEN', sessionStorage.getItem('token'))
@@ -26,6 +27,12 @@ const router = new Router({
         path: '/',
         component: (resolve) => {
           require(['@/components/dashboard/Dashboard'], resolve)
+        }
+      },
+      {
+        path: 'mine',
+        component: (resolve) => {
+          require(['@/components/mine/Mine'], resolve)
         }
       }
     ]

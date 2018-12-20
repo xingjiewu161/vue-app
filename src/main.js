@@ -18,6 +18,7 @@ import touch from './core/tool/touch'
 Vue.use(ElementUI)
 Vue.use(VueMaterial)
 Vue.config.productionTip = false
+Vue.config.ignoredElements = [/^ion-/]
 Vue.use(touch)
 /* eslint-disable no-new */
 new Vue({

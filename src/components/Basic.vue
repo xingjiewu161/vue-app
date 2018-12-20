@@ -1,18 +1,20 @@
 <template>
-  <div class="out-container">
-    <div class="das-container">
-      <t-top-goback :url="'/'"></t-top-goback>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+  <ion-app>
+    <div class="out-container">
+      <div class="das-container">
+        <t-top-goback :url="'/'"></t-top-goback>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </div>
+      <footer>
+          <md-bottom-bar md-sync-route>
+            <md-bottom-bar-item md-label="书目" :md-icon="dashboard" @click="home(1, '/basic', $event)"></md-bottom-bar-item>
+            <md-bottom-bar-item md-label="我的" :md-icon="center" @click="home(2, '/basic/mine', $event)"></md-bottom-bar-item>
+          </md-bottom-bar>
+      </footer>
     </div>
-    <footer>
-        <md-bottom-bar md-sync-route>
-          <md-bottom-bar-item md-label="书目" :md-icon="dashboard" @click="home(1, '/basic', $event)"></md-bottom-bar-item>
-          <md-bottom-bar-item md-label="我的" :md-icon="center" @click="home(2, '/basic', $event)"></md-bottom-bar-item>
-        </md-bottom-bar>
-    </footer>
-  </div>
+  </ion-app>
 </template>
 
 <script>
@@ -38,7 +40,7 @@ export default {
     home (type, url, el) {
       this.dashboard = `/static/icons/svg/home${type === 2 ? type - 1 : type + 1}.svg`
       this.center = `/static/icons/svg/mine${type}.svg`
-      type === 1 ? this.$router.push({ path: "/basic" }) : this.$router.push({ path: "/basic" })
+      type === 1 ? this.$router.push({ path: "/basic" }) : this.$router.push({ path: "/basic/mine" })
     }
   }
 };
