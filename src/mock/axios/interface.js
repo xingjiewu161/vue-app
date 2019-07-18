@@ -7,15 +7,16 @@ import store from '../../store'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api的base_url
-  timeout: 15000 // 请求超时时间
+  baseURL: '',
+  timeout: 15000, // 请求超时时间
+  headers: {'Content-Type': 'application/json'}
 });
 
 // respone拦截器
 service.interceptors.response.use(
   response => {
+    console.log(response)
     const res = response;
-    // service.defaults.headers.common['Authentication-Token'] = store.state.getters;
     if (res.status !== '200' && res.status !== 200) {
       if (res.status === '4001' || res.status === 4001) {
         MessageBox.confirm('用户名或密码错误，请重新登录', '重新登录', {
@@ -57,9 +58,15 @@ service.interceptors.response.use(
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
+    config.data = JSON.stringify(config.data);
+    config.headers = {
+      'Content-Type': 'application/json'
+    }
+    console.log(config)
     return config
   },
   (error) => {
+    console.log(error)
     return Promise.reject(error)
   })
 

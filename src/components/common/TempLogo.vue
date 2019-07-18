@@ -17,6 +17,6 @@ img {
 }
 
 header {
-    padding-top: 60px;
+    padding-top: 40px;
 }
 </style>

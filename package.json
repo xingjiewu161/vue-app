@@ -5,7 +5,7 @@
   "author": "sss",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js  --host 0.0.0.0",
     "start": "npm run dev",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run e2e",
@@ -16,6 +16,7 @@
     "animate.css": "^3.7.0",
     "antd": "^3.10.8",
     "babel-eslint": "^7.2.3",
+    "exif-js": "^2.3.0",
     "js-cookies": "^1.0.4",
     "npm": "^6.3.0",
     "svg-sprite-loader": "^4.1.3",

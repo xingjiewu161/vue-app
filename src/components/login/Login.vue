@@ -63,6 +63,9 @@ export default {
         password: [
           { required: true, message: "请输入登录密码", trigger: "change" },
           { validator: validatorPassword, trigger: "change" }
+        ],
+        department: [
+          { required: true, message: '请选择部门', trigger: 'change' }
         ]
       },
       newsListShow: []
@@ -70,19 +73,17 @@ export default {
   },
   methods: {
     login() {
+      console.log(this.$refs);
       this.$refs["loginForm"].validate(valid => {
+        console.log(valid, this.$router);
         if (valid) {
           this.loading = true;
-          this.$store
-            .dispatch("Login", this.loginForm)
-            .then(v => {
-              this.loading = false;
-              console.log(this.$store.state);
-              this.$router.push({ path: "basic" });
-              this.$store.state.login.token
-                ? this.$router.replace({ path: "basic" })
-                : this.$message("Current user infomation exception ");
-            })
+          this.$store.dispatch("Login", this.loginForm).then(v => {
+            this.loading = false;
+            this.$router.push({ path: "basic" });
+            // this.$store.state.login.token ? this.$router.replace({ path: "basic" })
+            //   : this.$message("Current user infomation exception ");
+          })
             .catch(e => {
               this.loading = false;
             });
@@ -91,7 +92,7 @@ export default {
     },
     gotoForgetPwd($event) {
       event.preventDefault();
-      this.$router.push({ path: "/forgetpwd" });
+      this.$router.push({ path: "carousel" });
     }
   }
 };

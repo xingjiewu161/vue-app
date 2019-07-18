@@ -1,6 +1,7 @@
 import { login, regist, logout } from 'api/login'
 // import { setName, setToken } from './auth.js'
 import getters from './getters.js'
+// import { MessageBox } from 'element-ui'
 
 const user = {
   state: {
@@ -19,16 +20,14 @@ const user = {
   },
   actions: {
     Login({ commit }, userInfo) {
-      const cellphone = userInfo.cellphone.trim();
-      const password = userInfo.password.trim();
+      let name = userInfo.password.trim()
+      let telephone = userInfo.cellphone.trim()
+      // let faceImage = userInfo.uploadinfo;
+      // let department = userInfo.department;
+      // let faceImages = faceImage.replace('data:image/jpeg;base64,', '');
+      // console.log(faceImages)
       return new Promise((resolve, reject) => {
-        login(cellphone, password).then(response => {
-          const data = response.data;
-          console.log(data)
-          commit('SET_NAME', data.auth.cellphone);
-          commit('SET_TOKEN', data.auth.token);
-          // setName(cellphone);
-          // setToken(data.token);
+        login(telephone, name, '', '').then(response => {
           resolve(response);
         }).catch(error => {
           reject(error)

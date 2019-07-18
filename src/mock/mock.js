@@ -18,6 +18,18 @@ const dataList = function () {
   }
   return {items: arr}
 }
+const userList = function () {
+  let arr = [];
+  for (let i = 0; i < 600; i++) {
+    let obj = {
+      img: Random.dataImage('300x250', 'mock的图片'),
+      name: Random.cname(),
+      status: Random.boolean()
+    }
+    arr.push(obj);
+  }
+  return {items: arr}
+}
 /**
  * @description return current user login infomation
  * @author Quicksand is better than time
@@ -175,3 +187,5 @@ Mock.mock('/dashboard/carouse', 'get', carouse)
 Mock.mock('/dashboard/newBook', 'get', newbook)
 Mock.mock('/dashboard/sellBook', 'get', sellbook)
 Mock.mock('/dashboard/scoreBook', 'get', scorebook)
+// get infomation
+Mock.mock('/photowall/userList', 'get', userList)
